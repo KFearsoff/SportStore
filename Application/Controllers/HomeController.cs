@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,8 @@ namespace Application.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index() => View();
+        private IStoreRepository _repository;
+        public HomeController(IStoreRepository repository) => _repository = repository;
+        public IActionResult Index() => View(_repository.Products);
     }
 }

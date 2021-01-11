@@ -14,6 +14,7 @@ namespace Application.Models
         {
             StoreDbContext context = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<StoreDbContext>();
 
+            //Check for pending migrations
             if (context.Database.GetPendingMigrations().Any()) context.Database.Migrate();
 
             if (!context.Products.Any())

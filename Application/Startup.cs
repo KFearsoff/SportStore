@@ -16,7 +16,6 @@ namespace Application
     public class Startup
     {
         private IConfiguration Configuration { get; set; }
-
         public Startup(IConfiguration config) => Configuration = config;
 
         public void ConfigureServices(IServiceCollection services)
@@ -26,7 +25,6 @@ namespace Application
             services.AddScoped<IStoreRepository, EFStoreRepository>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -41,8 +39,10 @@ namespace Application
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("pagination", "Products/Page{productPage}", new { Controller = "Home", action = "Index" });
                 endpoints.MapDefaultControllerRoute();
             });
+
             SeedData.EnsurePopulated(app);
         }
     }

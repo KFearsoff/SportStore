@@ -24,6 +24,14 @@ namespace Application.Helpers
         public PagingInfo PageModel { get; set; }
         public string PageAction { get; set; }
 
+
+        //Properties that are mapped from HTML attributes if needed
+        public bool PageClassesEnabled { get; set; } = false;
+        public string PageClass { get; set; }
+        public string PageClassNormal { get; set; }
+        public string PageClassSelected { get; set; }
+
+
         //Populates div element with elements that correspond to pages
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -34,6 +42,14 @@ namespace Application.Helpers
             {
                 TagBuilder tag = new TagBuilder("a");
                 tag.Attributes["href"] = urlHelper.Action(PageAction, new { ProductPage = i });
+
+                //Styling the pages according to the defined HTML attributes
+                if (PageClassesEnabled)
+                {
+                    tag.AddCssClass(PageClass);
+                    tag.AddCssClass(i == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);
+                }
+
                 tag.InnerHtml.Append(i.ToString());
                 result.InnerHtml.AppendHtml(tag);
             }

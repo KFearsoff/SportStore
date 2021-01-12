@@ -15,14 +15,18 @@ namespace Application.Helpers
     public class PageLinkTagHelper : TagHelper
     {
         private IUrlHelperFactory _urlHelperFactory;
-
         public PageLinkTagHelper(IUrlHelperFactory urlHelperFactory) => _urlHelperFactory = urlHelperFactory;
+
 
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext ViewContext { get; set; }
         public PagingInfo PageModel { get; set; }
         public string PageAction { get; set; }
+
+
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+        public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
 
 
         //Properties that are mapped from HTML attributes if needed
@@ -41,7 +45,8 @@ namespace Application.Helpers
             for (int i = 1; i <= PageModel.TotalPages; i++)
             {
                 TagBuilder tag = new TagBuilder("a");
-                tag.Attributes["href"] = urlHelper.Action(PageAction, new { ProductPage = i });
+                PageUrlValues["productPage"] = i;
+                tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
 
                 //Styling the pages according to the defined HTML attributes
                 if (PageClassesEnabled)

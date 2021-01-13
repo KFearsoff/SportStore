@@ -23,6 +23,9 @@ namespace Application
             services.AddControllersWithViews();
             services.AddDbContext<StoreDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionStrings:ApplicationConnection"]));
             services.AddScoped<IStoreRepository, EFStoreRepository>();
+            services.AddRazorPages();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -34,7 +37,7 @@ namespace Application
 
             app.UseStatusCodePages();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -48,6 +51,7 @@ namespace Application
                 endpoints.MapControllerRoute("pagination", "Products/Page{productPage}",
                     new { Controller = "Home", action = "Index", productPage = 1 });
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapRazorPages();
             });
 
             SeedData.EnsurePopulated(app);

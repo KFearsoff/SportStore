@@ -18,15 +18,16 @@ namespace Application.Tests
         [Fact]
         public void CanGeneratePageLinks()
         {
-            //Arrange
-            var urlHelper = new Mock<IUrlHelper>();
-            urlHelper.SetupSequence(x => x.Action(It.IsAny<UrlActionContext>()))
+            //Arrange - Mock UrlHelper
+            Mock<IUrlHelper> urlHelper = new Mock<IUrlHelper>();
+            urlHelper.SetupSequence(h => h.Action(It.IsAny<UrlActionContext>()))
                 .Returns("Test/Page1")
                 .Returns("Test/Page2")
                 .Returns("Test/Page3");
-            var urlHelperFactory = new Mock<IUrlHelperFactory>();
+            //Arrange - Mock UrlHelperFactory
+            Mock<IUrlHelperFactory> urlHelperFactory = new Mock<IUrlHelperFactory>();
             urlHelperFactory.Setup(f => f.GetUrlHelper(It.IsAny<ActionContext>())).Returns(urlHelper.Object);
-
+            //Arrange - PageLinkTagHelper
             PageLinkTagHelper helper = new PageLinkTagHelper(urlHelperFactory.Object)
             {
                 PageModel = new PagingInfo
@@ -37,10 +38,10 @@ namespace Application.Tests
                 },
                 PageAction = "Test"
             };
-
+            //Arrange - TagHelperContext
             TagHelperContext context = new TagHelperContext(new TagHelperAttributeList(), new Dictionary<object, object>(), "");
-
-            var content = new Mock<TagHelperContent>();
+            //Arrange - Mock TagHelperContent
+            Mock<TagHelperContent> content = new Mock<TagHelperContent>();
             TagHelperOutput output = new TagHelperOutput("div", new TagHelperAttributeList(), (cache, encoder) => Task.FromResult(content.Object));
 
             //Act

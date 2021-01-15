@@ -20,19 +20,21 @@ namespace Application.Tests
         [Fact]
         public void CanLoadCart()
         {
-            //Arrange
+            //Arrange - Products
             Product p1 = new Product { ProductID = 1, Name = "P1" };
             Product p2 = new Product { ProductID = 2, Name = "P2" };
+            //Arrange - Mock Repository
             Mock<IStoreRepository> mockRepo = new Mock<IStoreRepository>();
-            mockRepo.Setup(m => m.Products).Returns((new Product[] { p1, p2 }).AsQueryable<Product>());
-
+            mockRepo.Setup(r => r.Products).Returns((new Product[] { p1, p2 }).AsQueryable());
+            //Arrange - Cart
             Cart testCart = new Cart();
             testCart.AddItem(p1, 2);
             testCart.AddItem(p2, 1);
-
+            //Arrange - Mock Session
             Mock<ISession> mockSession = new Mock<ISession>();
             byte[] data = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(testCart));
-            mockSession.Setup(c => c.TryGetValue(It.IsAny<string>(), out data));
+            mockSession.Setup(s => s.TryGetValue(It.IsAny<string>(), out data));
+            //Arrange - Mock HttpContext
             Mock<HttpContext> mockContext = new Mock<HttpContext>();
             mockContext.Setup(c => c.Session).Returns(mockSession.Object);
 
@@ -56,16 +58,16 @@ namespace Application.Tests
         [Fact]
         public void CanUpdateCart()
         {
-            //Arrange
+            //Arrange - Mock Repository
             Mock<IStoreRepository> mockRepo = new Mock<IStoreRepository>();
-            mockRepo.Setup(m => m.Products).Returns((new Product[] { new Product { ProductID = 1, Name = "P1" } }).AsQueryable<Product>);
-
+            mockRepo.Setup(r => r.Products).Returns((new Product[] { new Product { ProductID = 1, Name = "P1" } }).AsQueryable());
+            //Arrange - Cart
             Cart testCart = new Cart();
-
+            //Arrange - Mock Session
             Mock<ISession> mockSession = new Mock<ISession>();
             mockSession.Setup(s => s.Set(It.IsAny<string>(), It.IsAny<byte[]>()))
                 .Callback<string, byte[]>((key, val) => testCart = JsonSerializer.Deserialize<Cart>(Encoding.UTF8.GetString(val)));
-
+            //Arrange - Mock HttpContext
             Mock<HttpContext> mockContext = new Mock<HttpContext>();
             mockContext.Setup(c => c.Session).Returns(mockSession.Object);
 

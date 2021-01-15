@@ -20,13 +20,13 @@ namespace Application.Tests
         {
             //Arrange
             Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
-            mock.Setup(m => m.Products).Returns((new Product[]
+            mock.Setup(r => r.Products).Returns((new Product[]
             {
-                new Product {ProductID = 1, Name = "P1", Category = "Apples"},
-                new Product {ProductID = 2, Name = "P2", Category = "Apples"},
-                new Product {ProductID = 3, Name = "P3", Category = "Plums"},
-                new Product {ProductID = 4, Name = "P4", Category = "Oranges"},
-            }).AsQueryable<Product>());
+                new Product { ProductID = 1, Name = "P1", Category = "Apples" },
+                new Product { ProductID = 2, Name = "P2", Category = "Apples" },
+                new Product { ProductID = 3, Name = "P3", Category = "Plums" },
+                new Product { ProductID = 4, Name = "P4", Category = "Oranges" },
+            }).AsQueryable());
             NavigationMenuViewComponent target = new NavigationMenuViewComponent(mock.Object);
 
             //Act
@@ -40,14 +40,15 @@ namespace Application.Tests
         [Fact]
         public void IndicatesSelectedCategory()
         {
-            //Arrange
+            //Arrange - Mock Repository
             string categoryToSelect = "Apples";
             Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
-            mock.Setup(m => m.Products).Returns((new Product[]
+            mock.Setup(r => r.Products).Returns((new Product[]
             {
-                new Product{ProductID=1,Name="P1",Category="Apples"},
-                new Product{ProductID=4,Name="P2",Category="Oranges"},
-            }).AsQueryable<Product>());
+                new Product { ProductID = 1, Name = "P1", Category = "Apples" },
+                new Product { ProductID = 4, Name = "P2", Category = "Oranges" }
+            }).AsQueryable());
+            //Arrange - Target
             NavigationMenuViewComponent target = new NavigationMenuViewComponent(mock.Object);
             target.ViewComponentContext = new ViewComponentContext
             {

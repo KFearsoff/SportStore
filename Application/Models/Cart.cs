@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Application.Models
 {
@@ -15,12 +13,14 @@ namespace Application.Models
                 .Where(p => p.Product.ProductID == product.ProductID)
                 .FirstOrDefault();
 
-            if (line == null) Lines.Add(new CartLine
-            {
-                Product = product,
-                Quantity = quantity
-            });
-            else line.Quantity += quantity;
+            if (line == null)
+                Lines.Add(new CartLine
+                {
+                    Product = product,
+                    Quantity = quantity
+                });
+            else
+                line.Quantity += quantity;
         }
 
         public virtual void RemoveLine(Product product) => Lines.RemoveAll(l => l.Product.ProductID == product.ProductID);

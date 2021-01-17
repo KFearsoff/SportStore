@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using Moq;
-using Microsoft.AspNetCore.Components;
+﻿using Application.Components;
+using Application.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
-using Application.Components;
-using Application.Models;
+using Moq;
+using System.Collections.Generic;
+using System.Linq;
+using Xunit;
 
 namespace Application.Tests
 {
@@ -49,10 +45,12 @@ namespace Application.Tests
                 new Product { ProductID = 4, Name = "P2", Category = "Oranges" }
             }).AsQueryable());
             //Arrange - Target
-            NavigationMenuViewComponent target = new NavigationMenuViewComponent(mock.Object);
-            target.ViewComponentContext = new ViewComponentContext
+            NavigationMenuViewComponent target = new NavigationMenuViewComponent(mock.Object)
             {
-                ViewContext = new ViewContext { RouteData = new Microsoft.AspNetCore.Routing.RouteData() }
+                ViewComponentContext = new ViewComponentContext
+                {
+                    ViewContext = new ViewContext { RouteData = new Microsoft.AspNetCore.Routing.RouteData() }
+                }
             };
             target.RouteData.Values["category"] = categoryToSelect;
 

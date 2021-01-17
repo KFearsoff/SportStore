@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Application.Models
 {
@@ -15,7 +12,8 @@ namespace Application.Models
             StoreDbContext context = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<StoreDbContext>();
 
             //Check for pending migrations
-            if (context.Database.GetPendingMigrations().Any()) context.Database.Migrate();
+            if (context.Database.GetPendingMigrations().Any())
+                context.Database.Migrate();
 
             if (!context.Products.Any())
             {

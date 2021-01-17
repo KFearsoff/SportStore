@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Routing;
-using Moq;
-using Application.Models;
+﻿using Application.Models;
 using Application.Pages;
-using System.Text.Json;
+using Moq;
+using System.Linq;
 using Xunit;
 
 namespace Application.Tests
@@ -36,7 +27,7 @@ namespace Application.Tests
             cartModel.OnGet("myUrl");
 
             //Assert
-            Assert.Equal(2, cartModel.Cart.Lines.Count());
+            Assert.Equal(2, cartModel.Cart.Lines.Count);
             Assert.Equal("myUrl", cartModel.ReturnUrl);
         }
 

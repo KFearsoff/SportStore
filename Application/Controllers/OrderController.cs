@@ -1,16 +1,13 @@
 ﻿using Application.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Application.Controllers
 {
     public class OrderController : Controller
     {
-        private IOrderRepository _repository;
-        private Cart _cart;
+        private readonly IOrderRepository _repository;
+        private readonly Cart _cart;
 
         public OrderController(IOrderRepository repoService, Cart cartService)
         {
@@ -23,7 +20,8 @@ namespace Application.Controllers
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
-            if (_cart.Lines.Count() == 0) ModelState.AddModelError("", "Sorry, your cart is empty!");
+            if (_cart.Lines.Count == 0)
+                ModelState.AddModelError("", "Sorry, your cart is empty!");
             if (ModelState.IsValid)
             {
                 order.Lines = _cart.Lines.ToArray();
@@ -31,7 +29,8 @@ namespace Application.Controllers
                 _cart.Clear();
                 return RedirectToPage("/Completed", new { orderId = order.OrderID });
             }
-            else return View();
+            else
+                return View();
         }
     }
 }

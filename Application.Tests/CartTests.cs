@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Application.Models;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Models;
 using Xunit;
 
 namespace Application.Tests
@@ -67,7 +63,7 @@ namespace Application.Tests
 
             //Assert
             Assert.Empty(target.Lines.Where(c => c.Product == p2));
-            Assert.Equal(2, target.Lines.Count());
+            Assert.Equal(2, target.Lines.Count);
         }
 
         [Fact]

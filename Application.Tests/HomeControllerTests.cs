@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Controllers;
 using Application.Models;
-using Application.Controllers;
-using Xunit;
-using Moq;
-using Microsoft.AspNetCore.Mvc;
 using Application.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using System;
+using System.Linq;
+using Xunit;
 
 namespace Application.Tests
 {

@@ -1,15 +1,13 @@
-﻿using System;
+﻿using Application.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Application.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Components
 {
     public class NavigationMenuViewComponent : ViewComponent
     {
-        private IStoreRepository _repository;
+        private readonly IStoreRepository _repository;
         public NavigationMenuViewComponent(IStoreRepository repository) => _repository = repository;
 
         public IViewComponentResult Invoke()

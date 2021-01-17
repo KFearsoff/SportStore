@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Helpers;
+﻿using Application.Helpers;
 using Application.Models.ViewModels;
-using Xunit;
-using Moq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Moq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Application.Tests
 {
